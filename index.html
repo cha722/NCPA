@@ -1,1 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediTrack+ - Multilingual Patient Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1a5276;
+            --secondary: #117864;
+            --accent: #d4ac0d;
+            --light: #eaf2f8;
+            --dark: #154360;
+            --danger: #e74c3c;
+            --success: #27ae60;
+            --gray: #95a5a6;
+            --header-height: 70px;
+        }
 
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eaf2f8 0%, #d6eaf8 100%);
+            min-height: 100vh;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 22px;
+            letter-spacing: 0.5px;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 15px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .lang-selector option {
+            background: var(--primary);
+        }
+
+        /* Main content */
+        .main-content {
+            padding-top: calc(var(--header-height) + 20px);
+            min-height: calc(100vh - var(--header-height) - 40px);
+        }
+
+        /* Login Styles */
+        #loginSection {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            margin: 40px auto;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .login-container {
+            padding: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.1);
+        }
+
+        button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .message {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            min-height: 20px;
+            color: var(--danger);
+        }
+
+        /* Portal Styles */
+        .portal-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            margin-top: 20px;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .portal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--accent);
+        }
+
+        .portal-title {
+            color: var(--dark);
+            font-size: 24px;
+        }
+
+        .logout-btn {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid rgba(231, 76, 60, 0.3);
+            color: var(--danger);
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(231, 76, 60, 0.2);
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .medication-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .card-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delete-btn {
+            background: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        /* Patient Dashboard */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .card-title-dash {
+            font-size: 18px;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .reminder-time {
+            background: var(--accent);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .pill-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary);
+            margin-right: 15px;
+        }
+
+        .medication-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .med-info {
+            flex: 1;
+        }
+
+        /* Status messages */
+        .success-message {
+            color: var(--success);
+        }
+
+        .error-message {
+            color: var(--danger);
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            z-index: 1000;
+            animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .notification.success {
+            background: var(--success);
+        }
+
+        .notification.error {
+            background: var(--danger);
+        }
+
+        .notification.reminder {
+            background: var(--primary);
+            top: auto;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 500px;
+            animation: slideUpReminder 0.5s ease-out;
+        }
+
+        @keyframes slideUpReminder {
+            from { transform: translate(-50%, 100%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        /* Welcome message */
+        .welcome-message {
+            font-size: 18px;
+            margin-top: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .header h1 {
+                font-size: 18px;
+            }
+            
+            .header-controls {
+                gap: 10px;
+            }
+            
+            .lang-selector {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .portal-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .logout-btn {
+                margin-top: 15px;
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Language-specific styles */
+        [lang="ar"] {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        [lang="ar"] .form-row {
+            flex-direction: row-reverse;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo-container">
+            <div class="logo">NC</div>
+            <h1 lang="en">NEW CHAAR PHARMACY - MediTrack+</h1>
+            <h1 lang="ar" class="hidden">صيدلية نيوتشار - MediTrack+</h1>
+            <h1 lang="fr" class="hidden">PHARMACIE NEW CHAAR - MediTrack+</h1>
+        </div>
+        
+        <div class="header-controls">
+            <select class="lang-selector" id="langSelector">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+            </select>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Login Section -->
+            <section id="loginSection">
+                <div class="login-container">
+                    <h2 lang="en">Login to MediTrack+</h2>
+                    <h2 lang="ar" class="hidden">تسجيل الدخول إلى MediTrack+</h2>
+                    <h2 lang="fr" class="hidden">Connectez-vous à MediTrack+</h2>
+                    
+                    <form id="loginForm">
+                        <div class="input-group">
+                            <label for="username" lang="en">Username:</label>
+                            <label for="username" lang="ar" class="hidden">اسم المستخدم:</label>
+                            <label for="username" lang="fr" class="hidden">Nom d'utilisateur:</label>
+                            <input type="text" id="username" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="password" lang="en">Password:</label>
+                            <label for="password" lang="ar" class="hidden">كلمة المرور:</label>
+                            <label for="password" lang="fr" class="hidden">Mot de passe:</label>
+                            <input type="password" id="password" required>
+                        </div>
+                        <button type="submit" lang="en">Login</button>
+                        <button type="submit" lang="ar" class="hidden">تسجيل الدخول</button>
+                        <button type="submit" lang="fr" class="hidden">Connexion</button>
+                    </form>
+                    <div id="loginMessage" class="message"></div>
+                </div>
+            </section>
+
+            <!-- Doctor Portal -->
+            <section id="doctorSection" class="hidden portal-section">
+                <div class="portal-header">
+                    <h2 class="portal-title" lang="en">DOCTOR PORTAL</h2>
+                    <h2 class="portal-title" lang="ar" class="hidden">بوابة الطبيب</h2>
+                    <h2 class="portal-title" lang="fr" class="hidden">PORTAL MÉDECIN</h2>
+                    <button id="doctorLogout" class="logout-btn" lang="en">Logout</button>
+                    <button id="doctorLogout" class="logout-btn" lang="ar" class="hidden">تسجيل الخروج</button>
+                    <button id="doctorLogout" class="logout-btn" lang="fr" class="hidden">Déconnexion</button>
+                </div>
+                
+                <div class="form-container">
+                    <h3 lang="en">Create Patient Account</h3>
+                    <h3 lang="ar" class="hidden">إنشاء حساب المريض</h3>
+                    <h3 lang="fr" class="hidden">Créer un compte patient</h3>
+                    
+                    <form id="patientForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="fullName" lang="en">Full Name</label>
+                                <label for="fullName" lang="ar" class="hidden">الاسم الكامل</label>
+                                <label for="fullName" lang="fr" class="hidden">Nom complet</label>
+                                <input type="text" id="fullName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="patientUsername" lang="en">Username</label>
+                                <label for="patientUsername" lang="ar" class="hidden">اسم المستخدم</label>
+                                <label for="patientUsername" lang="fr" class="hidden">Nom d'utilisateur</label>
+                                <input type="text" id="patientUsername" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="patientPassword" lang="en">Password</label>
+                                <label for="patientPassword" lang="ar" class="hidden">كلمة المرور</label>
+                                <label for="patientPassword" lang="fr" class="hidden">Mot de passe</label>
+                                <input type="password" id="patientPassword" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" lang="en">Create Patient Account</button>
+                        <button type="submit" lang="ar" class="hidden">إنشاء حساب المريض</button>
+                        <button type="submit" lang="fr" class="hidden">Créer un compte patient</button>
+                    </form>
+                    <div id="doctorMessage" class="message"></div>
+                    
+                    <h3 style="margin-top: 30px;" lang="en">Existing Patients</h3>
+                    <h3 style="margin-top: 30px;" lang="ar" class="hidden">المرضى الحاليين</h3>
+                    <h3 style="margin-top: 30px;" lang="fr" class="hidden">Patients existants</h3>
+                    
+                    <div class="table-container">
+                        <table id="patientsTable">
+                            <thead>
+                                <tr>
+                                    <th lang="en">Full Name</th>
+                                    <th lang="ar" class="hidden">الاسم الكامل</th>
+                                    <th lang="fr" class="hidden">Nom complet</th>
+                                    <th lang="en">Username</th>
+                                    <th lang="ar" class="hidden">اسم المستخدم</th>
+                                    <th lang="fr" class="hidden">Nom d'utilisateur</th>
+                                    <th lang="en">Medications</th>
+                                    <th lang="ar" class="hidden">الأدوية</th>
+                                    <th lang="fr" class="hidden">Médicaments</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patientsList">
+                                <!-- Patients will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Patient Portal -->
+            <section id="patientSection" class="hidden portal-section">
+                <div class="portal-header">
+                    <div>
+                        <h2 class="portal-title" lang="en">PATIENT PORTAL</h2>
+                        <h2 class="portal-title" lang="ar" class="hidden">بوابة المريض</h2>
+                        <h2 class="portal-title" lang="fr" class="hidden">PORTAL PATIENT</h2>
+                        <p class="welcome-message" lang="en">Welcome, <span id="patientName">John Doe</span></p>
+                        <p class="welcome-message" lang="ar" class="hidden">مرحبًا, <span id="patientName">John Doe</span></p>
+                        <p class="welcome-message" lang="fr" class="hidden">Bienvenue, <span id="patientName">John Doe</span></p>
+                    </div>
+                    <button id="patientLogout" class="logout-btn" lang="en">Logout</button>
+                    <button id="patientLogout" class="logout-btn" lang="ar" class="hidden">تسجيل الخروج</button>
+                    <button id="patientLogout" class="logout-btn" lang="fr" class="hidden">Déconnexion</button>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title-dash" lang="en">Medication Schedule</div>
+                            <div class="card-title-dash" lang="ar" class="hidden">جدول الأدوية</div>
+                            <div class="card-title-dash" lang="fr" class="hidden">Calendrier des médicaments</div>
+                            <div><i class="fas fa-pills"></i></div>
+                        </div>
+                        <div id="patientMedications">
+                            <!-- Medications will be populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title-dash" lang="en">Prescription Details</div>
+                            <div class="card-title-dash" lang="ar" class="hidden">تفاصيل الوصفة الطبية</div>
+                            <div class="card-title-dash" lang="fr" class="hidden">Détails de la prescription</div>
+                            <div><i class="fas fa-file-medical"></i></div>
+                        </div>
+                        <div id="prescriptionDetails">
+                            <div class="medication-item">
+                                <div class="pill-icon">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <div class="med-info">
+                                    <strong lang="en">Prescribed by: Dr. Hani Farouk Chaar</strong>
+                                    <strong lang="ar" class="hidden">وصفه: د. هاني فاروق شعار</strong>
+                                    <strong lang="fr" class="hidden">Prescrit par: Dr. Hani Farouk Chaar</strong>
+                                    <p>2025-06-15</p>
+                                </div>
+                            </div>
+                            <div class="medication-item">
+                                <div class="pill-icon" style="background: rgba(155, 89, 182, 0.1); color: #9b59b6;">
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                                <div class="med-info">
+                                    <strong lang="en">Diagnosis: Acute Bronchitis</strong>
+                                    <strong lang="ar" class="hidden">التشخيص: التهاب الشعب الهوائية الحاد</strong>
+                                    <strong lang="fr" class="hidden">Diagnostic: Bronchite aiguë</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <div class="card-title-dash" lang="en">Next Medication</div>
+                            <div class="card-title-dash" lang="ar" class="hidden">الجرعة التالية</div>
+                            <div class="card-title-dash" lang="fr" class="hidden">Prochain médicament</div>
+                            <div><i class="fas fa-bell"></i></div>
+                        </div>
+                        <div id="nextMedication">
+                            <div class="medication-item">
+                                <div class="pill-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="med-info">
+                                    <strong id="nextMedName">Amoxicillin</strong>
+                                    <p id="nextMedTime">08:00 AM</p>
+                                    <p id="nextMedDosage" class="small">500mg</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button id="testSound" lang="en">Test Reminder</button>
+                            <button id="testSound" lang="ar" class="hidden">اختبار التنبيه</button>
+                            <button id="testSound" lang="fr" class="hidden">Tester la notification</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // Language support
+        const translations = {
+            en: {
+                "login": "Login",
+                "logout": "Logout",
+                "create_patient": "Create Patient Account",
+                "full_name": "Full Name",
+                "username": "Username",
+                "password": "Password",
+                "medications": "Medications",
+                "next_med": "Next Medication",
+                "prescription": "Prescription Details",
+                "diagnosis": "Diagnosis",
+                "prescribed_by": "Prescribed by",
+                "test_reminder": "Test Reminder",
+                "welcome": "Welcome"
+            },
+            fr: {
+                "login": "Connexion",
+                "logout": "Déconnexion",
+                "create_patient": "Créer un compte patient",
+                "full_name": "Nom complet",
+                "username": "Nom d'utilisateur",
+                "password": "Mot de passe",
+                "medications": "Médicaments",
+                "next_med": "Prochain médicament",
+                "prescription": "Détails de la prescription",
+                "diagnosis": "Diagnostic",
+                "prescribed_by": "Prescrit par",
+                "test_reminder": "Tester la notification",
+                "welcome": "Bienvenue"
+            },
+            ar: {
+                "login": "تسجيل الدخول",
+                "logout": "تسجيل الخروج",
+                "create_patient": "إنشاء حساب المريض",
+                "full_name": "الاسم الكامل",
+                "username": "اسم المستخدم",
+                "password": "كلمة المرور",
+                "medications": "الأدوية",
+                "next_med": "الجرعة التالية",
+                "prescription": "تفاصيل الوصفة الطبية",
+                "diagnosis": "التشخيص",
+                "prescribed_by": "وصفه",
+                "test_reminder": "اختبار التنبيه",
+                "welcome": "مرحبًا"
+            }
+        };
+        
+        // Current state
+        let currentUser = null;
+        let currentLang = 'en';
+        let allPatients = [];
+        
+        // Sample patient data
+        const samplePatients = [
+            {
+                username: "john_doe",
+                password: "hidden123",
+                fullName: "John Doe",
+                medicines: [
+                    {
+                        name: "Amoxicillin",
+                        dose: "500mg",
+                        time: "08:00",
+                        frequency: "Twice daily",
+                        notes: "Take after meals"
+                    },
+                    {
+                        name: "Vitamin D",
+                        dose: "1000IU",
+                        time: "12:00",
+                        frequency: "Daily",
+                        notes: "With breakfast"
+                    },
+                    {
+                        name: "Lisinopril",
+                        dose: "10mg",
+                        time: "19:00",
+                        frequency: "Daily",
+                        notes: "Before dinner"
+                    }
+                ]
+            },
+            {
+                username: "sarah_j",
+                password: "pass1234",
+                fullName: "Sarah Johnson",
+                medicines: [
+                    {
+                        name: "Metformin",
+                        dose: "850mg",
+                        time: "08:00",
+                        frequency: "Twice daily",
+                        notes: "Take with food"
+                    },
+                    {
+                        name: "Atorvastatin",
+                        dose: "20mg",
+                        time: "21:00",
+                        frequency: "Daily",
+                        notes: "At bedtime"
+                    }
+                ]
+            }
+        ];
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load existing data
+            allPatients = samplePatients;
+            
+            // Setup event listeners
+            setupEventListeners();
+            
+            // Set up language switcher
+            document.getElementById('langSelector').addEventListener('change', changeLanguage);
+        });
+        
+        function setupEventListeners() {
+            const loginForm = document.getElementById('loginForm');
+            const patientForm = document.getElementById('patientForm');
+            const doctorLogout = document.getElementById('doctorLogout');
+            const patientLogout = document.getElementById('patientLogout');
+            const testSoundBtn = document.getElementById('testSound');
+            
+            if(loginForm) loginForm.addEventListener('submit', handleLogin);
+            if(patientForm) patientForm.addEventListener('submit', createPatient);
+            if(doctorLogout) doctorLogout.addEventListener('click', logout);
+            if(patientLogout) patientLogout.addEventListener('click', logout);
+            if(testSoundBtn) testSoundBtn.addEventListener('click', playTestSound);
+        }
+        
+        function changeLanguage() {
+            const lang = document.getElementById('langSelector').value;
+            currentLang = lang;
+            
+            // Hide all language elements
+            document.querySelectorAll('[lang]').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            // Show elements for selected language
+            document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
+                el.classList.remove('hidden');
+            });
+            
+            // Update text content for dynamic elements
+            document.getElementById('patientName').textContent = "John Doe";
+            
+            // Update patient table
+            if(document.getElementById('doctorSection').classList.contains('hidden') === false) {
+                loadPatients();
+            }
+            
+            // Update patient view
+            if(document.getElementById('patientSection').classList.contains('hidden') === false) {
+                const patient = allPatients.find(p => p.username === "john_doe");
+                displayPatientMedications(patient);
+            }
+        }
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            
+            // Check for doctor login
+            if(username === "doctor" && password === "SecureDoctorPass123") {
+                currentUser = { role: 'doctor', username: 'doctor' };
+                showDoctorPortal();
+                return;
+            }
+            
+            // Check for patient login
+            const patient = allPatients.find(p => p.username === username && p.password === password);
+            if(patient) {
+                currentUser = { role: 'patient', username: patient.username, patientData: patient };
+                showPatientPortal(patient);
+                return;
+            }
+            
+            // Show error
+            document.getElementById('loginMessage').textContent = "Invalid credentials";
+        }
+        
+        function logout() {
+            currentUser = null;
+            document.getElementById('loginSection').classList.remove('hidden');
+            document.getElementById('doctorSection').classList.add('hidden');
+            document.getElementById('patientSection').classList.add('hidden');
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+        
+        function showDoctorPortal() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('doctorSection').classList.remove('hidden');
+            document.getElementById('patientSection').classList.add('hidden');
+            loadPatients();
+        }
+        
+        function showPatientPortal(patient) {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('doctorSection').classList.add('hidden');
+            document.getElementById('patientSection').classList.remove('hidden');
+            document.getElementById('patientName').textContent = patient.fullName;
+            displayPatientMedications(patient);
+        }
+        
+        function createPatient(e) {
+            e.preventDefault();
+            
+            const fullName = document.getElementById('fullName').value.trim();
+            const username = document.getElementById('patientUsername').value.trim();
+            const password = document.getElementById('patientPassword').value;
+            
+            // Validate
+            if(!fullName || !username || !password) {
+                document.getElementById('doctorMessage').textContent = "All fields are required";
+                return;
+            }
+            
+            // Check if username exists
+            if(allPatients.some(p => p.username === username)) {
+                document.getElementById('doctorMessage').textContent = "Username already exists";
+                return;
+            }
+            
+            // Create new patient
+            const newPatient = {
+                username,
+                password,
+                fullName,
+                medicines: []
+            };
+            
+            // Add to data
+            allPatients.push(newPatient);
+            
+            // Show success
+            document.getElementById('doctorMessage').textContent = "Patient created successfully!";
+            document.getElementById('patientForm').reset();
+            loadPatients();
+        }
+        
+        function loadPatients() {
+            const patientsList = document.getElementById('patientsList');
+            patientsList.innerHTML = '';
+            
+            if(allPatients.length === 0) {
+                patientsList.innerHTML = '<tr><td colspan="3" style="text-align:center;">No patients found</td></tr>';
+                return;
+            }
+            
+            allPatients.forEach(patient => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${patient.fullName}</td>
+                    <td>${patient.username}</td>
+                    <td>${patient.medicines.length}</td>
+                `;
+                patientsList.appendChild(row);
+            });
+        }
+        
+        function displayPatientMedications(patient) {
+            const patientMedications = document.getElementById('patientMedications');
+            patientMedications.innerHTML = '';
+            
+            if(!patient.medicines || patient.medicines.length === 0) {
+                patientMedications.innerHTML = '<p>No medications scheduled</p>';
+                return;
+            }
+            
+            patient.medicines.forEach(med => {
+                const medItem = document.createElement('div');
+                medItem.className = 'medication-item';
+                medItem.innerHTML = `
+                    <div class="pill-icon">
+                        <i class="fas fa-capsules"></i>
+                    </div>
+                    <div class="med-info">
+                        <strong>${med.name}</strong>
+                        <p>${med.dose} • ${med.time}</p>
+                        <p class="small">${med.notes}</p>
+                    </div>
+                    <div class="reminder-time">${med.time}</div>
+                `;
+                patientMedications.appendChild(medItem);
+            });
+            
+            // Set next medication
+            if(patient.medicines.length > 0) {
+                document.getElementById('nextMedName').textContent = patient.medicines[0].name;
+                document.getElementById('nextMedTime').textContent = patient.medicines[0].time;
+                document.getElementById('nextMedDosage').textContent = patient.medicines[0].dose;
+            }
+        }
+        
+        function playTestSound() {
+            // In a real implementation, this would play an actual sound file
+            alert(`Playing reminder sound`);
+        }
+    </script>
+</body>
+</html>
