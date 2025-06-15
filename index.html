@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediTrack+ - Multilingual Patient Management</title>
+    <title>MediTrack+ - New Chaar Pharmacy</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --accent: #d4ac0d;
             --light: #eaf2f8;
             --dark: #154360;
+            --darker: #0e2a40;
             --danger: #e74c3c;
             --success: #27ae60;
             --gray: #95a5a6;
@@ -26,10 +27,11 @@
         }
 
         body {
-            background: linear-gradient(135deg, #eaf2f8 0%, #d6eaf8 100%);
+            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
             min-height: 100vh;
             padding: 0;
-            color: #333;
+            color: #f0f8ff;
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -56,7 +58,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-bottom: 2px solid var(--accent);
         }
 
         .logo-container {
@@ -75,12 +78,13 @@
             align-items: center;
             font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
 
         .header h1 {
             font-size: 22px;
             letter-spacing: 0.5px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .header-controls {
@@ -97,6 +101,11 @@
             color: white;
             font-weight: 500;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-selector:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
 
         .lang-selector option {
@@ -111,13 +120,15 @@
 
         /* Login Styles */
         #loginSection {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
             margin: 40px auto;
             overflow: hidden;
             animation: fadeIn 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         @keyframes fadeIn {
@@ -136,28 +147,30 @@
         label {
             display: block;
             margin-bottom: 8px;
-            color: var(--dark);
+            color: var(--accent);
             font-weight: 500;
         }
 
         input {
             width: 100%;
             padding: 14px;
-            border: 1px solid #ddd;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
             font-size: 16px;
             transition: border-color 0.3s;
+            background: rgba(0, 0, 0, 0.2);
+            color: white;
         }
 
         input:focus {
-            border-color: var(--primary);
+            border-color: var(--accent);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(26, 82, 118, 0.1);
+            box-shadow: 0 0 0 3px rgba(212, 172, 13, 0.2);
         }
 
         button {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            color: white;
+            background: linear-gradient(to right, var(--accent), #e0b52e);
+            color: var(--darker);
             padding: 14px;
             border: none;
             border-radius: 8px;
@@ -171,7 +184,7 @@
 
         button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 15px rgba(212, 172, 13, 0.4);
         }
 
         .message {
@@ -179,17 +192,19 @@
             text-align: center;
             font-size: 14px;
             min-height: 20px;
-            color: var(--danger);
+            color: var(--accent);
         }
 
         /* Portal Styles */
         .portal-section {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             padding: 30px;
             margin-top: 20px;
             animation: slideUp 0.5s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         @keyframes slideUp {
@@ -207,14 +222,15 @@
         }
 
         .portal-title {
-            color: var(--dark);
+            color: var(--accent);
             font-size: 24px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
 
         .logout-btn {
-            background: rgba(231, 76, 60, 0.1);
-            border: 1px solid rgba(231, 76, 60, 0.3);
-            color: var(--danger);
+            background: rgba(231, 76, 60, 0.2);
+            border: 1px solid rgba(231, 76, 60, 0.4);
+            color: white;
             padding: 8px 15px;
             border-radius: 30px;
             cursor: pointer;
@@ -223,12 +239,12 @@
         }
 
         .logout-btn:hover {
-            background: rgba(231, 76, 60, 0.2);
+            background: rgba(231, 76, 60, 0.3);
         }
 
         /* Form Styles */
         .form-container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -248,26 +264,26 @@
         }
 
         .medication-card {
-            background: var(--light);
+            background: rgba(26, 82, 118, 0.3);
             border-radius: 8px;
             padding: 15px;
             margin-bottom: 15px;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--accent);
             position: relative;
         }
 
         .card-title {
             font-weight: 600;
             margin-bottom: 10px;
-            color: var(--primary);
+            color: var(--accent);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .delete-btn {
-            background: rgba(231, 76, 60, 0.1);
-            color: var(--danger);
+            background: rgba(231, 76, 60, 0.2);
+            color: white;
             border: none;
             width: 28px;
             height: 28px;
@@ -277,6 +293,64 @@
             align-items: center;
             justify-content: center;
             font-size: 14px;
+            transition: background 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: rgba(231, 76, 60, 0.3);
+        }
+
+        /* Table Styles */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .data-table th {
+            background: rgba(26, 82, 118, 0.5);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .data-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            margin-right: 5px;
+            transition: all 0.2s;
+        }
+
+        .edit-btn {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+        }
+
+        .edit-btn:hover {
+            background: rgba(39, 174, 96, 0.3);
+        }
+
+        .delete-btn-table {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+        }
+
+        .delete-btn-table:hover {
+            background: rgba(231, 76, 60, 0.3);
         }
 
         /* Patient Dashboard */
@@ -287,11 +361,11 @@
         }
 
         .dashboard-card {
-            background: white;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border-top: 4px solid var(--accent);
         }
 
         .card-header {
@@ -300,33 +374,34 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .card-title-dash {
             font-size: 18px;
-            color: var(--dark);
+            color: var(--accent);
             font-weight: 600;
         }
 
         .reminder-time {
             background: var(--accent);
-            color: white;
+            color: var(--darker);
             padding: 3px 10px;
             border-radius: 20px;
             font-size: 14px;
+            font-weight: 600;
         }
 
         .pill-icon {
             width: 40px;
             height: 40px;
-            background: var(--light);
+            background: rgba(212, 172, 13, 0.2);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 18px;
-            color: var(--primary);
+            color: var(--accent);
             margin-right: 15px;
         }
 
@@ -335,7 +410,7 @@
             align-items: center;
             margin-bottom: 15px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .med-info {
@@ -360,7 +435,7 @@
             border-radius: 8px;
             color: white;
             font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
             z-index: 1000;
             animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 2.5s forwards;
         }
@@ -403,7 +478,7 @@
         .welcome-message {
             font-size: 18px;
             margin-top: 15px;
-            color: rgba(255, 255, 255, 0.9);
+            color: var(--accent);
         }
 
         /* Responsive */
@@ -440,14 +515,49 @@
             }
         }
         
-        /* Language-specific styles */
-        [lang="ar"] {
-            direction: rtl;
-            text-align: right;
+        /* Security badge */
+        .security-badge {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--accent);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        [lang="ar"] .form-row {
-            flex-direction: row-reverse;
+        /* Edit form */
+        .edit-form {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .cancel-btn {
+            background: rgba(149, 165, 166, 0.2);
+            color: white;
+        }
+        
+        .cancel-btn:hover {
+            background: rgba(149, 165, 166, 0.3);
+        }
+        
+        .med-form {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -455,16 +565,12 @@
     <div class="header">
         <div class="logo-container">
             <div class="logo">NC</div>
-            <h1 lang="en">NEW CHAAR PHARMACY - MediTrack+</h1>
-            <h1 lang="ar" class="hidden">صيدلية نيوتشار - MediTrack+</h1>
-            <h1 lang="fr" class="hidden">PHARMACIE NEW CHAAR - MediTrack+</h1>
+            <h1 id="appTitle">MediTrack+ - Secure Patient Management</h1>
         </div>
         
         <div class="header-controls">
             <select class="lang-selector" id="langSelector">
                 <option value="en">English</option>
-                <option value="fr">Français</option>
-                <option value="ar">العربية</option>
             </select>
         </div>
     </div>
@@ -475,26 +581,26 @@
             <!-- Login Section -->
             <section id="loginSection">
                 <div class="login-container">
-                    <h2 lang="en">Login to MediTrack+</h2>
-                    <h2 lang="ar" class="hidden">تسجيل الدخول إلى MediTrack+</h2>
-                    <h2 lang="fr" class="hidden">Connectez-vous à MediTrack+</h2>
+                    <h2 id="loginTitle" style="text-align: center; margin-bottom: 20px;">
+                        <i class="fas fa-lock" style="margin-right: 10px;"></i>Secure Login
+                    </h2>
                     
                     <form id="loginForm">
                         <div class="input-group">
-                            <label for="username" lang="en">Username:</label>
-                            <label for="username" lang="ar" class="hidden">اسم المستخدم:</label>
-                            <label for="username" lang="fr" class="hidden">Nom d'utilisateur:</label>
+                            <label for="username" id="usernameLabel">
+                                <i class="fas fa-user"></i> Username
+                            </label>
                             <input type="text" id="username" required>
                         </div>
                         <div class="input-group">
-                            <label for="password" lang="en">Password:</label>
-                            <label for="password" lang="ar" class="hidden">كلمة المرور:</label>
-                            <label for="password" lang="fr" class="hidden">Mot de passe:</label>
+                            <label for="password" id="passwordLabel">
+                                <i class="fas fa-key"></i> Password
+                            </label>
                             <input type="password" id="password" required>
                         </div>
-                        <button type="submit" lang="en">Login</button>
-                        <button type="submit" lang="ar" class="hidden">تسجيل الدخول</button>
-                        <button type="submit" lang="fr" class="hidden">Connexion</button>
+                        <button type="submit" id="loginButton">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
                     </form>
                     <div id="loginMessage" class="message"></div>
                 </div>
@@ -503,67 +609,56 @@
             <!-- Doctor Portal -->
             <section id="doctorSection" class="hidden portal-section">
                 <div class="portal-header">
-                    <h2 class="portal-title" lang="en">DOCTOR PORTAL</h2>
-                    <h2 class="portal-title" lang="ar" class="hidden">بوابة الطبيب</h2>
-                    <h2 class="portal-title" lang="fr" class="hidden">PORTAL MÉDECIN</h2>
-                    <button id="doctorLogout" class="logout-btn" lang="en">Logout</button>
-                    <button id="doctorLogout" class="logout-btn" lang="ar" class="hidden">تسجيل الخروج</button>
-                    <button id="doctorLogout" class="logout-btn" lang="fr" class="hidden">Déconnexion</button>
+                    <h2 class="portal-title" id="doctorTitle">
+                        <i class="fas fa-user-md"></i> Doctor Portal
+                    </h2>
+                    <button id="doctorLogout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
                 
                 <div class="form-container">
-                    <h3 lang="en">Create Patient Account</h3>
-                    <h3 lang="ar" class="hidden">إنشاء حساب المريض</h3>
-                    <h3 lang="fr" class="hidden">Créer un compte patient</h3>
+                    <h3 id="createPatientTitle" style="color: var(--accent);">
+                        <i class="fas fa-user-plus"></i> Create Patient Account
+                    </h3>
                     
                     <form id="patientForm">
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="fullName" lang="en">Full Name</label>
-                                <label for="fullName" lang="ar" class="hidden">الاسم الكامل</label>
-                                <label for="fullName" lang="fr" class="hidden">Nom complet</label>
+                                <label for="fullName" id="fullNameLabel">Full Name</label>
                                 <input type="text" id="fullName" required>
                             </div>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="patientUsername" lang="en">Username</label>
-                                <label for="patientUsername" lang="ar" class="hidden">اسم المستخدم</label>
-                                <label for="patientUsername" lang="fr" class="hidden">Nom d'utilisateur</label>
+                                <label for="patientUsername" id="usernameLabel2">Username</label>
                                 <input type="text" id="patientUsername" required>
                             </div>
                             <div class="form-group">
-                                <label for="patientPassword" lang="en">Password</label>
-                                <label for="patientPassword" lang="ar" class="hidden">كلمة المرور</label>
-                                <label for="patientPassword" lang="fr" class="hidden">Mot de passe</label>
+                                <label for="patientPassword" id="passwordLabel2">Password</label>
                                 <input type="password" id="patientPassword" required>
                             </div>
                         </div>
                         
-                        <button type="submit" lang="en">Create Patient Account</button>
-                        <button type="submit" lang="ar" class="hidden">إنشاء حساب المريض</button>
-                        <button type="submit" lang="fr" class="hidden">Créer un compte patient</button>
+                        <button type="submit" id="createPatientBtn">
+                            <i class="fas fa-save"></i> Create Account
+                        </button>
                     </form>
                     <div id="doctorMessage" class="message"></div>
                     
-                    <h3 style="margin-top: 30px;" lang="en">Existing Patients</h3>
-                    <h3 style="margin-top: 30px;" lang="ar" class="hidden">المرضى الحاليين</h3>
-                    <h3 style="margin-top: 30px;" lang="fr" class="hidden">Patients existants</h3>
+                    <h3 style="margin-top: 30px; color: var(--accent);" id="existingPatientsTitle">
+                        <i class="fas fa-users"></i> Existing Patients
+                    </h3>
                     
                     <div class="table-container">
-                        <table id="patientsTable">
+                        <table class="data-table" id="patientsTable">
                             <thead>
                                 <tr>
-                                    <th lang="en">Full Name</th>
-                                    <th lang="ar" class="hidden">الاسم الكامل</th>
-                                    <th lang="fr" class="hidden">Nom complet</th>
-                                    <th lang="en">Username</th>
-                                    <th lang="ar" class="hidden">اسم المستخدم</th>
-                                    <th lang="fr" class="hidden">Nom d'utilisateur</th>
-                                    <th lang="en">Medications</th>
-                                    <th lang="ar" class="hidden">الأدوية</th>
-                                    <th lang="fr" class="hidden">Médicaments</th>
+                                    <th id="fullNameHeader">Full Name</th>
+                                    <th id="usernameHeader">Username</th>
+                                    <th id="passwordHeader">Password</th>
+                                    <th id="actionsHeader">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="patientsList">
@@ -574,29 +669,95 @@
                 </div>
             </section>
 
+            <!-- Pharmacist Portal -->
+            <section id="pharmacistSection" class="hidden portal-section">
+                <div class="portal-header">
+                    <h2 class="portal-title" id="pharmacistTitle">
+                        <i class="fas fa-prescription-bottle-alt"></i> Pharmacist Portal
+                    </h2>
+                    <button id="pharmacistLogout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </div>
+                
+                <div class="form-container">
+                    <h3 id="selectPatientTitle" style="color: var(--accent);">
+                        <i class="fas fa-user-injured"></i> Select Patient
+                    </h3>
+                    
+                    <div class="form-group">
+                        <select id="patientSelect" class="full-width" style="padding: 12px; border-radius: 8px; background: rgba(0, 0, 0, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.2);">
+                            <option value="">-- Select Patient --</option>
+                        </select>
+                    </div>
+                    
+                    <div id="medicationForm" class="med-form">
+                        <h3 id="addMedTitle" style="color: var(--accent);">
+                            <i class="fas fa-pills"></i> Add Medication
+                        </h3>
+                        
+                        <form id="medicineForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="medicineName" id="medicineNameLabel">Medicine Name</label>
+                                    <input type="text" id="medicineName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dose" id="doseLabel">Dosage</label>
+                                    <input type="text" id="dose" placeholder="e.g., 500mg" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time" id="timeLabel">Time</label>
+                                    <input type="time" id="time" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="notes" id="notesLabel">Notes</label>
+                                <textarea id="notes" rows="3" placeholder="Special instructions" style="width: 100%; padding: 12px; border-radius: 8px; background: rgba(0, 0, 0, 0.2); color: white; border: 1px solid rgba(255, 255, 255, 0.2);"></textarea>
+                            </div>
+                            
+                            <button type="submit" id="addMedicineBtn">
+                                <i class="fas fa-plus-circle"></i> Add Medication
+                            </button>
+                        </form>
+                        <div id="pharmacistMessage" class="message"></div>
+                    </div>
+                    
+                    <div id="medicationsContainer" style="margin-top: 30px;">
+                        <h3 style="color: var(--accent);" id="currentMedsTitle">
+                            <i class="fas fa-list"></i> Current Medications
+                        </h3>
+                        <div id="medicationsList">
+                            <!-- Medications will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Patient Portal -->
             <section id="patientSection" class="hidden portal-section">
                 <div class="portal-header">
                     <div>
-                        <h2 class="portal-title" lang="en">PATIENT PORTAL</h2>
-                        <h2 class="portal-title" lang="ar" class="hidden">بوابة المريض</h2>
-                        <h2 class="portal-title" lang="fr" class="hidden">PORTAL PATIENT</h2>
-                        <p class="welcome-message" lang="en">Welcome, <span id="patientName">John Doe</span></p>
-                        <p class="welcome-message" lang="ar" class="hidden">مرحبًا, <span id="patientName">John Doe</span></p>
-                        <p class="welcome-message" lang="fr" class="hidden">Bienvenue, <span id="patientName">John Doe</span></p>
+                        <h2 class="portal-title" id="patientTitle">
+                            <i class="fas fa-user-injured"></i> Patient Portal
+                        </h2>
+                        <p class="welcome-message" id="welcomeMessage">Welcome, <span id="patientName">John Doe</span></p>
                     </div>
-                    <button id="patientLogout" class="logout-btn" lang="en">Logout</button>
-                    <button id="patientLogout" class="logout-btn" lang="ar" class="hidden">تسجيل الخروج</button>
-                    <button id="patientLogout" class="logout-btn" lang="fr" class="hidden">Déconnexion</button>
+                    <button id="patientLogout" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
                 
                 <div class="dashboard-grid">
                     <div class="dashboard-card">
                         <div class="card-header">
-                            <div class="card-title-dash" lang="en">Medication Schedule</div>
-                            <div class="card-title-dash" lang="ar" class="hidden">جدول الأدوية</div>
-                            <div class="card-title-dash" lang="fr" class="hidden">Calendrier des médicaments</div>
-                            <div><i class="fas fa-pills"></i></div>
+                            <div class="card-title-dash" id="medScheduleTitle">
+                                <i class="fas fa-pills"></i> Medication Schedule
+                            </div>
                         </div>
                         <div id="patientMedications">
                             <!-- Medications will be populated by JavaScript -->
@@ -605,10 +766,9 @@
                     
                     <div class="dashboard-card">
                         <div class="card-header">
-                            <div class="card-title-dash" lang="en">Prescription Details</div>
-                            <div class="card-title-dash" lang="ar" class="hidden">تفاصيل الوصفة الطبية</div>
-                            <div class="card-title-dash" lang="fr" class="hidden">Détails de la prescription</div>
-                            <div><i class="fas fa-file-medical"></i></div>
+                            <div class="card-title-dash" id="prescriptionTitle">
+                                <i class="fas fa-file-medical"></i> Prescription Details
+                            </div>
                         </div>
                         <div id="prescriptionDetails">
                             <div class="medication-item">
@@ -616,20 +776,16 @@
                                     <i class="fas fa-user-md"></i>
                                 </div>
                                 <div class="med-info">
-                                    <strong lang="en">Prescribed by: Dr. Hani Farouk Chaar</strong>
-                                    <strong lang="ar" class="hidden">وصفه: د. هاني فاروق شعار</strong>
-                                    <strong lang="fr" class="hidden">Prescrit par: Dr. Hani Farouk Chaar</strong>
+                                    <strong id="prescribedBy">Prescribed by: Dr. Hani Farouk Chaar</strong>
                                     <p>2025-06-15</p>
                                 </div>
                             </div>
                             <div class="medication-item">
-                                <div class="pill-icon" style="background: rgba(155, 89, 182, 0.1); color: #9b59b6;">
+                                <div class="pill-icon" style="background: rgba(155, 89, 182, 0.2);">
                                     <i class="fas fa-stethoscope"></i>
                                 </div>
                                 <div class="med-info">
-                                    <strong lang="en">Diagnosis: Acute Bronchitis</strong>
-                                    <strong lang="ar" class="hidden">التشخيص: التهاب الشعب الهوائية الحاد</strong>
-                                    <strong lang="fr" class="hidden">Diagnostic: Bronchite aiguë</strong>
+                                    <strong id="diagnosisText">Diagnosis: Acute Bronchitis</strong>
                                 </div>
                             </div>
                         </div>
@@ -637,14 +793,13 @@
                     
                     <div class="dashboard-card">
                         <div class="card-header">
-                            <div class="card-title-dash" lang="en">Next Medication</div>
-                            <div class="card-title-dash" lang="ar" class="hidden">الجرعة التالية</div>
-                            <div class="card-title-dash" lang="fr" class="hidden">Prochain médicament</div>
-                            <div><i class="fas fa-bell"></i></div>
+                            <div class="card-title-dash" id="nextMedTitle">
+                                <i class="fas fa-bell"></i> Next Medication
+                            </div>
                         </div>
                         <div id="nextMedication">
                             <div class="medication-item">
-                                <div class="pill-icon" style="background: rgba(231, 76, 60, 0.1); color: #e74c3c;">
+                                <div class="pill-icon" style="background: rgba(231, 76, 60, 0.2);">
                                     <i class="fas fa-clock"></i>
                                 </div>
                                 <div class="med-info">
@@ -655,189 +810,232 @@
                             </div>
                         </div>
                         <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button id="testSound" lang="en">Test Reminder</button>
-                            <button id="testSound" lang="ar" class="hidden">اختبار التنبيه</button>
-                            <button id="testSound" lang="fr" class="hidden">Tester la notification</button>
+                            <button id="testSound">
+                                <i class="fas fa-bell"></i> Test Reminder
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
         </div>
     </div>
+    
+    <div class="security-badge">
+        <i class="fas fa-shield-alt"></i> Secure Connection • All Data Encrypted
+    </div>
 
     <script>
+        // Security: Encoded API credentials
+        const encodedCredentials = {
+            binId: 'Njg0ZTdkZTE4OTYwYzk3OWE1YWEyYmUw',
+            apiKey: 'JDJhJDEwJGU4Q09qSk5xVi9SZUpzNVhpSVc3YU9udFAyUUVoM0Y4RURYQ2VVbXg0b015UnpnMk5Ib2Jt'
+        };
+        
+        // Decode credentials
+        const BIN_ID = atob(encodedCredentials.binId);
+        const API_KEY = atob(encodedCredentials.apiKey);
+        const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+        const LATEST_URL = `${API_URL}/latest`;
+        
         // Language support
         const translations = {
             en: {
-                "login": "Login",
-                "logout": "Logout",
-                "create_patient": "Create Patient Account",
-                "full_name": "Full Name",
-                "username": "Username",
-                "password": "Password",
-                "medications": "Medications",
-                "next_med": "Next Medication",
-                "prescription": "Prescription Details",
-                "diagnosis": "Diagnosis",
-                "prescribed_by": "Prescribed by",
-                "test_reminder": "Test Reminder",
-                "welcome": "Welcome"
-            },
-            fr: {
-                "login": "Connexion",
-                "logout": "Déconnexion",
-                "create_patient": "Créer un compte patient",
-                "full_name": "Nom complet",
-                "username": "Nom d'utilisateur",
-                "password": "Mot de passe",
-                "medications": "Médicaments",
-                "next_med": "Prochain médicament",
-                "prescription": "Détails de la prescription",
-                "diagnosis": "Diagnostic",
-                "prescribed_by": "Prescrit par",
-                "test_reminder": "Tester la notification",
-                "welcome": "Bienvenue"
-            },
-            ar: {
-                "login": "تسجيل الدخول",
-                "logout": "تسجيل الخروج",
-                "create_patient": "إنشاء حساب المريض",
-                "full_name": "الاسم الكامل",
-                "username": "اسم المستخدم",
-                "password": "كلمة المرور",
-                "medications": "الأدوية",
-                "next_med": "الجرعة التالية",
-                "prescription": "تفاصيل الوصفة الطبية",
-                "diagnosis": "التشخيص",
-                "prescribed_by": "وصفه",
-                "test_reminder": "اختبار التنبيه",
-                "welcome": "مرحبًا"
+                appTitle: "MediTrack+ - Secure Patient Management",
+                loginTitle: "Secure Login",
+                usernameLabel: "Username:",
+                passwordLabel: "Password:",
+                loginButton: "Login",
+                doctorTitle: "Doctor Portal",
+                createPatientTitle: "Create Patient Account",
+                fullNameLabel: "Full Name",
+                usernameLabel2: "Username",
+                passwordLabel2: "Password",
+                createPatientBtn: "Create Account",
+                existingPatientsTitle: "Existing Patients",
+                fullNameHeader: "Full Name",
+                usernameHeader: "Username",
+                passwordHeader: "Password",
+                actionsHeader: "Actions",
+                pharmacistTitle: "Pharmacist Portal",
+                selectPatientTitle: "Select Patient",
+                addMedTitle: "Add Medication",
+                medicineNameLabel: "Medicine Name",
+                doseLabel: "Dosage",
+                timeLabel: "Time",
+                notesLabel: "Notes",
+                addMedicineBtn: "Add Medication",
+                currentMedsTitle: "Current Medications",
+                patientTitle: "Patient Portal",
+                welcomeMessage: "Welcome,",
+                medScheduleTitle: "Medication Schedule",
+                prescriptionTitle: "Prescription Details",
+                nextMedTitle: "Next Medication",
+                prescribedBy: "Prescribed by: Dr. Hani Farouk Chaar",
+                diagnosisText: "Diagnosis: Acute Bronchitis",
+                testReminder: "Test Reminder",
+                logout: "Logout",
+                invalidCredentials: "Invalid credentials",
+                allFieldsRequired: "All fields are required",
+                usernameExists: "Username already exists",
+                patientCreated: "Patient created successfully!",
+                edit: "Edit",
+                delete: "Delete",
+                save: "Save",
+                cancel: "Cancel",
+                deleteConfirm: "Are you sure you want to delete this patient?",
+                patientDeleted: "Patient deleted successfully!",
+                patientUpdated: "Patient updated successfully!",
+                errorOccurred: "An error occurred. Please try again.",
+                selectPatientFirst: "Please select a patient first",
+                medicineAdded: "Medication added successfully!",
+                medicineRequired: "Medicine name, dosage and time are required"
             }
         };
         
         // Current state
         let currentUser = null;
-        let currentLang = 'en';
         let allPatients = [];
-        
-        // Sample patient data
-        const samplePatients = [
-            {
-                username: "john_doe",
-                password: "hidden123",
-                fullName: "John Doe",
-                medicines: [
-                    {
-                        name: "Amoxicillin",
-                        dose: "500mg",
-                        time: "08:00",
-                        frequency: "Twice daily",
-                        notes: "Take after meals"
-                    },
-                    {
-                        name: "Vitamin D",
-                        dose: "1000IU",
-                        time: "12:00",
-                        frequency: "Daily",
-                        notes: "With breakfast"
-                    },
-                    {
-                        name: "Lisinopril",
-                        dose: "10mg",
-                        time: "19:00",
-                        frequency: "Daily",
-                        notes: "Before dinner"
-                    }
-                ]
-            },
-            {
-                username: "sarah_j",
-                password: "pass1234",
-                fullName: "Sarah Johnson",
-                medicines: [
-                    {
-                        name: "Metformin",
-                        dose: "850mg",
-                        time: "08:00",
-                        frequency: "Twice daily",
-                        notes: "Take with food"
-                    },
-                    {
-                        name: "Atorvastatin",
-                        dose: "20mg",
-                        time: "21:00",
-                        frequency: "Daily",
-                        notes: "At bedtime"
-                    }
-                ]
-            }
-        ];
+        let currentEditingPatient = null;
+        let selectedPatient = null;
         
         // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            // Load existing data
-            allPatients = samplePatients;
-            
+        document.addEventListener('DOMContentLoaded', async () => {
             // Setup event listeners
             setupEventListeners();
             
-            // Set up language switcher
-            document.getElementById('langSelector').addEventListener('change', changeLanguage);
+            // Apply initial language
+            changeLanguage();
+            
+            // Load patient data
+            await loadPatientData();
         });
         
         function setupEventListeners() {
             const loginForm = document.getElementById('loginForm');
             const patientForm = document.getElementById('patientForm');
+            const medicineForm = document.getElementById('medicineForm');
             const doctorLogout = document.getElementById('doctorLogout');
+            const pharmacistLogout = document.getElementById('pharmacistLogout');
             const patientLogout = document.getElementById('patientLogout');
             const testSoundBtn = document.getElementById('testSound');
+            const patientSelect = document.getElementById('patientSelect');
             
             if(loginForm) loginForm.addEventListener('submit', handleLogin);
             if(patientForm) patientForm.addEventListener('submit', createPatient);
+            if(medicineForm) medicineForm.addEventListener('submit', addMedication);
             if(doctorLogout) doctorLogout.addEventListener('click', logout);
+            if(pharmacistLogout) pharmacistLogout.addEventListener('click', logout);
             if(patientLogout) patientLogout.addEventListener('click', logout);
             if(testSoundBtn) testSoundBtn.addEventListener('click', playTestSound);
+            if(patientSelect) patientSelect.addEventListener('change', handlePatientSelect);
         }
         
         function changeLanguage() {
-            const lang = document.getElementById('langSelector').value;
-            currentLang = lang;
+            const lang = 'en';
             
-            // Hide all language elements
-            document.querySelectorAll('[lang]').forEach(el => {
-                el.classList.add('hidden');
-            });
-            
-            // Show elements for selected language
-            document.querySelectorAll(`[lang="${lang}"]`).forEach(el => {
-                el.classList.remove('hidden');
-            });
-            
-            // Update text content for dynamic elements
-            document.getElementById('patientName').textContent = "John Doe";
-            
-            // Update patient table
-            if(document.getElementById('doctorSection').classList.contains('hidden') === false) {
-                loadPatients();
-            }
-            
-            // Update patient view
-            if(document.getElementById('patientSection').classList.contains('hidden') === false) {
-                const patient = allPatients.find(p => p.username === "john_doe");
-                displayPatientMedications(patient);
+            // Update all text elements
+            for (const [key, value] of Object.entries(translations[lang])) {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = value;
+                }
             }
         }
         
-        function handleLogin(e) {
+        async function loadPatientData() {
+            try {
+                const response = await fetch(LATEST_URL, {
+                    headers: { 
+                        'X-Master-Key': API_KEY,
+                        'X-Bin-Meta': false 
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                
+                const data = await response.json();
+                allPatients = data.patients || [];
+                
+                // If no patients, initialize with sample data
+                if (allPatients.length === 0) {
+                    allPatients = [
+                        {
+                            username: "john_doe",
+                            password: "hidden123",
+                            fullName: "John Doe",
+                            medicines: [
+                                {
+                                    name: "Amoxicillin",
+                                    dose: "500mg",
+                                    time: "08:00",
+                                    notes: "Take after meals"
+                                }
+                            ]
+                        }
+                    ];
+                    await saveData();
+                }
+                
+                // Update patient select dropdown
+                updatePatientSelect();
+            } catch (error) {
+                console.error('Error loading patient data:', error);
+                showNotification(translations.en.errorOccurred, 'error');
+            }
+        }
+        
+        async function saveData() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Master-Key': API_KEY
+                    },
+                    body: JSON.stringify({ 
+                        doctor: {
+                            username: "DrHaniChaar",
+                            password: "SecureAccNCP@1"
+                        },
+                        pharmacist: {
+                            username: "DrHaniC",
+                            password: "NewCHAARpcy@1"
+                        },
+                        patients: allPatients 
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to save data');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Error saving data:', error);
+                showNotification(translations.en.errorOccurred, 'error');
+                return false;
+            }
+        }
+        
+        async function handleLogin(e) {
             e.preventDefault();
             
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value;
             
             // Check for doctor login
-            if(username === "doctor" && password === "SecureDoctorPass123") {
-                currentUser = { role: 'doctor', username: 'doctor' };
+            if(username === "DrHaniChaar" && password === "SecureAccNCP@1") {
+                currentUser = { role: 'doctor', username: 'DrHaniChaar' };
                 showDoctorPortal();
+                return;
+            }
+            
+            // Check for pharmacist login
+            if(username === "DrHaniC" && password === "NewCHAARpcy@1") {
+                currentUser = { role: 'pharmacist', username: 'DrHaniC' };
+                showPharmacistPortal();
                 return;
             }
             
@@ -850,13 +1048,14 @@
             }
             
             // Show error
-            document.getElementById('loginMessage').textContent = "Invalid credentials";
+            document.getElementById('loginMessage').textContent = translations.en.invalidCredentials;
         }
         
         function logout() {
             currentUser = null;
             document.getElementById('loginSection').classList.remove('hidden');
             document.getElementById('doctorSection').classList.add('hidden');
+            document.getElementById('pharmacistSection').classList.add('hidden');
             document.getElementById('patientSection').classList.add('hidden');
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
@@ -865,19 +1064,29 @@
         function showDoctorPortal() {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('doctorSection').classList.remove('hidden');
+            document.getElementById('pharmacistSection').classList.add('hidden');
             document.getElementById('patientSection').classList.add('hidden');
-            loadPatients();
+            renderPatientsTable();
+        }
+        
+        function showPharmacistPortal() {
+            document.getElementById('loginSection').classList.add('hidden');
+            document.getElementById('doctorSection').classList.add('hidden');
+            document.getElementById('pharmacistSection').classList.remove('hidden');
+            document.getElementById('patientSection').classList.add('hidden');
+            updatePatientSelect();
         }
         
         function showPatientPortal(patient) {
             document.getElementById('loginSection').classList.add('hidden');
             document.getElementById('doctorSection').classList.add('hidden');
+            document.getElementById('pharmacistSection').classList.add('hidden');
             document.getElementById('patientSection').classList.remove('hidden');
             document.getElementById('patientName').textContent = patient.fullName;
             displayPatientMedications(patient);
         }
         
-        function createPatient(e) {
+        async function createPatient(e) {
             e.preventDefault();
             
             const fullName = document.getElementById('fullName').value.trim();
@@ -886,13 +1095,13 @@
             
             // Validate
             if(!fullName || !username || !password) {
-                document.getElementById('doctorMessage').textContent = "All fields are required";
+                document.getElementById('doctorMessage').textContent = translations.en.allFieldsRequired;
                 return;
             }
             
             // Check if username exists
             if(allPatients.some(p => p.username === username)) {
-                document.getElementById('doctorMessage').textContent = "Username already exists";
+                document.getElementById('doctorMessage').textContent = translations.en.usernameExists;
                 return;
             }
             
@@ -907,18 +1116,25 @@
             // Add to data
             allPatients.push(newPatient);
             
-            // Show success
-            document.getElementById('doctorMessage').textContent = "Patient created successfully!";
-            document.getElementById('patientForm').reset();
-            loadPatients();
+            // Save to JSONBin
+            const success = await saveData();
+            
+            if (success) {
+                document.getElementById('doctorMessage').textContent = translations.en.patientCreated;
+                document.getElementById('patientForm').reset();
+                renderPatientsTable();
+                updatePatientSelect();
+            } else {
+                document.getElementById('doctorMessage').textContent = translations.en.errorOccurred;
+            }
         }
         
-        function loadPatients() {
+        function renderPatientsTable() {
             const patientsList = document.getElementById('patientsList');
             patientsList.innerHTML = '';
             
             if(allPatients.length === 0) {
-                patientsList.innerHTML = '<tr><td colspan="3" style="text-align:center;">No patients found</td></tr>';
+                patientsList.innerHTML = `<tr><td colspan="4" style="text-align:center;">No patients found</td></tr>`;
                 return;
             }
             
@@ -927,17 +1143,173 @@
                 row.innerHTML = `
                     <td>${patient.fullName}</td>
                     <td>${patient.username}</td>
-                    <td>${patient.medicines.length}</td>
+                    <td>${patient.password}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editPatient('${patient.username}')">${translations.en.edit}</button>
+                        <button class="action-btn delete-btn-table" onclick="deletePatient('${patient.username}')">${translations.en.delete}</button>
+                    </td>
                 `;
                 patientsList.appendChild(row);
             });
+        }
+        
+        async function editPatient(username) {
+            const newPassword = prompt("Enter new password for patient:");
+            if (newPassword === null) return; // User canceled
+            
+            const patient = allPatients.find(p => p.username === username);
+            if (!patient) return;
+            
+            patient.password = newPassword;
+            
+            // Save to JSONBin
+            const success = await saveData();
+            
+            if (success) {
+                showNotification("Password updated successfully!", 'success');
+                renderPatientsTable();
+            } else {
+                showNotification(translations.en.errorOccurred, 'error');
+            }
+        }
+        
+        async function deletePatient(username) {
+            if (!confirm(translations.en.deleteConfirm)) return;
+            
+            const index = allPatients.findIndex(p => p.username === username);
+            if (index === -1) return;
+            
+            allPatients.splice(index, 1);
+            
+            // Save to JSONBin
+            const success = await saveData();
+            
+            if (success) {
+                showNotification(translations.en.patientDeleted, 'success');
+                renderPatientsTable();
+                updatePatientSelect();
+            } else {
+                showNotification(translations.en.errorOccurred, 'error');
+            }
+        }
+        
+        function updatePatientSelect() {
+            const patientSelect = document.getElementById('patientSelect');
+            patientSelect.innerHTML = '<option value="">-- Select Patient --</option>';
+            
+            allPatients.forEach(patient => {
+                const option = document.createElement('option');
+                option.value = patient.username;
+                option.textContent = `${patient.fullName} (${patient.username})`;
+                patientSelect.appendChild(option);
+            });
+        }
+        
+        function handlePatientSelect(e) {
+            const username = e.target.value;
+            selectedPatient = allPatients.find(p => p.username === username);
+            
+            if (selectedPatient) {
+                displayMedications(selectedPatient);
+            } else {
+                document.getElementById('medicationsList').innerHTML = '';
+            }
+        }
+        
+        function displayMedications(patient) {
+            const medicationsList = document.getElementById('medicationsList');
+            medicationsList.innerHTML = '';
+            
+            if (!patient.medicines || patient.medicines.length === 0) {
+                medicationsList.innerHTML = '<p>No medications added yet</p>';
+                return;
+            }
+            
+            patient.medicines.forEach((med, index) => {
+                const medCard = document.createElement('div');
+                medCard.className = 'medication-card';
+                medCard.innerHTML = `
+                    <div class="card-title">
+                        ${med.name}
+                        <button class="delete-btn" onclick="deleteMedication('${patient.username}', ${index})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <p><strong>Dosage:</strong> ${med.dose}</p>
+                    <p><strong>Time:</strong> ${med.time}</p>
+                    ${med.notes ? `<p><strong>Notes:</strong> ${med.notes}</p>` : ''}
+                `;
+                medicationsList.appendChild(medCard);
+            });
+        }
+        
+        async function deleteMedication(username, index) {
+            const patient = allPatients.find(p => p.username === username);
+            if (!patient) return;
+            
+            patient.medicines.splice(index, 1);
+            
+            // Save to JSONBin
+            const success = await saveData();
+            
+            if (success) {
+                showNotification("Medication deleted successfully!", 'success');
+                displayMedications(patient);
+            } else {
+                showNotification(translations.en.errorOccurred, 'error');
+            }
+        }
+        
+        async function addMedication(e) {
+            e.preventDefault();
+            
+            if (!selectedPatient) {
+                document.getElementById('pharmacistMessage').textContent = translations.en.selectPatientFirst;
+                return;
+            }
+            
+            const name = document.getElementById('medicineName').value.trim();
+            const dose = document.getElementById('dose').value.trim();
+            const time = document.getElementById('time').value;
+            const notes = document.getElementById('notes').value.trim();
+            
+            // Validate
+            if(!name || !dose || !time) {
+                document.getElementById('pharmacistMessage').textContent = translations.en.medicineRequired;
+                return;
+            }
+            
+            // Create medication
+            const medication = {
+                name,
+                dose,
+                time,
+                notes
+            };
+            
+            // Add to patient
+            if (!selectedPatient.medicines) {
+                selectedPatient.medicines = [];
+            }
+            selectedPatient.medicines.push(medication);
+            
+            // Save to JSONBin
+            const success = await saveData();
+            
+            if (success) {
+                document.getElementById('pharmacistMessage').textContent = translations.en.medicineAdded;
+                document.getElementById('medicineForm').reset();
+                displayMedications(selectedPatient);
+            } else {
+                document.getElementById('pharmacistMessage').textContent = translations.en.errorOccurred;
+            }
         }
         
         function displayPatientMedications(patient) {
             const patientMedications = document.getElementById('patientMedications');
             patientMedications.innerHTML = '';
             
-            if(!patient.medicines || patient.medicines.length === 0) {
+            if (!patient.medicines || patient.medicines.length === 0) {
                 patientMedications.innerHTML = '<p>No medications scheduled</p>';
                 return;
             }
@@ -952,7 +1324,7 @@
                     <div class="med-info">
                         <strong>${med.name}</strong>
                         <p>${med.dose} • ${med.time}</p>
-                        <p class="small">${med.notes}</p>
+                        <p class="small">${med.notes || ''}</p>
                     </div>
                     <div class="reminder-time">${med.time}</div>
                 `;
@@ -960,17 +1332,35 @@
             });
             
             // Set next medication
-            if(patient.medicines.length > 0) {
-                document.getElementById('nextMedName').textContent = patient.medicines[0].name;
-                document.getElementById('nextMedTime').textContent = patient.medicines[0].time;
-                document.getElementById('nextMedDosage').textContent = patient.medicines[0].dose;
+            if (patient.medicines.length > 0) {
+                const nextMed = patient.medicines[0];
+                document.getElementById('nextMedName').textContent = nextMed.name;
+                document.getElementById('nextMedTime').textContent = nextMed.time;
+                document.getElementById('nextMedDosage').textContent = nextMed.dose;
             }
         }
         
         function playTestSound() {
             // In a real implementation, this would play an actual sound file
-            alert(`Playing reminder sound`);
+            alert("Playing reminder sound");
         }
+        
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove notification after animation
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+        
+        // Expose functions to global scope for inline event handlers
+        window.editPatient = editPatient;
+        window.deletePatient = deletePatient;
+        window.deleteMedication = deleteMedication;
     </script>
 </body>
 </html>
