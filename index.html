@@ -798,6 +798,17 @@
 </audio>
 
   <script>
+      // Disable right-click
+  document.addEventListener('contextmenu', event => event.preventDefault());
+
+  // Block DevTools shortcuts
+  document.onkeydown = function (e) {
+    if (e.keyCode == 123 || // F12
+        (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'C' || e.key === 'J')) || // Ctrl+Shift+I/C/J
+        (e.ctrlKey && e.key === 'U')) { // Ctrl+U
+      return false;
+    }
+  };
     // Global variable to track if sound is playing
 let isSoundPlaying = false;
     // Security: Encoded API credentials
